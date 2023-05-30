@@ -5,11 +5,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 const Navbar = () => {
+
+  // Details of the current user
+  // const [user, loading, error] = useAuthState(auth);  // you can get more from this
   const [user] = useAuthState(auth);
 
+  //SignOut function
   const signUserOut = async () => {
     await signOut(auth);
   };
+
 
   return (
     <div className="navbar">
