@@ -5,7 +5,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 
 const Navbar = () => {
-
   // Details of the current user
   // const [user, loading, error] = useAuthState(auth);  // you can get more from this
   const [user] = useAuthState(auth);
@@ -15,12 +14,15 @@ const Navbar = () => {
     await signOut(auth);
   };
 
-
   return (
     <div className="navbar">
-      <div className="links">
+      <div className="links"> 
         <Link to="/"> Home </Link>
-        <Link to="/login"> Login </Link>
+        {!user ? (
+          <Link to="/login"> Login </Link>
+        ) : (
+          <Link to="/createpost"> Create Post </Link>
+        )}
       </div>
 
       <div className="user">
