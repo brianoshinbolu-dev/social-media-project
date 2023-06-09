@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addDoc, collection } from "firebase/firestore"; // imported direct from the firebase module
-import { db, auth } from "../../config/firebase"; // database that was configure in the config folder
-import { useAuthState } from "react-firebase-hooks/auth";
+import { db, auth } from "../../config/firebase"; // database that was configure in the config folder, imported auth to get user data for the post "addDoc"
+import { useAuthState } from "react-firebase-hooks/auth"; //imported useAuthState to get user data for the post "addDoc"
 
 //typescript info for the onCreatePost function
 interface CreateFormData {
@@ -13,8 +14,9 @@ interface CreateFormData {
 }
 
 const CreateForm = () => {
-  const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
+  const [user] = useAuthState(auth); // variable to use in the "onCreatePost" function
 
   //Form validation with Yup (post form)
   const schema = yup.object().shape({
@@ -31,9 +33,6 @@ const CreateForm = () => {
     resolver: yupResolver(schema),
   });
 
-
-
-
   const postRef = collection(db, "post"); //this is used to specify which COLLECTION we are refering too
 
   //Function to Create pOst ===========================
@@ -43,6 +42,8 @@ const CreateForm = () => {
       username: user?.displayName,
       userId: user?.uid,
     });
+
+    navigate("/");
   };
 
   return (

@@ -11,12 +11,12 @@ const Navbar = () => {
 
   //SignOut function
   const signUserOut = async () => {
-    await signOut(auth);
+    await signOut(auth); // signout the user
   };
 
   return (
     <div className="navbar">
-      <div className="links"> 
+      <div className="links">
         <Link to="/"> Home </Link>
         {!user ? (
           <Link to="/login"> Login </Link>
